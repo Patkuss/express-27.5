@@ -8,39 +8,49 @@ router.route('/seats').get((req, res) => {
 });
 
 router.route('/seats/:id').get((req, res) => {
-  for(let record of db.seats){
-    if(record.id == req.params.id){
-      res.json(record);
+  for(let post of db.seats){
+    if(req.params.id == post.id){
+      res.json(post);
     };
   };
 });
 
 router.route('/seats').post((req, res) => {
-  const {author, text} = req.body;
-  const newPost = {id: uuidv4(), author: author, text: text};
-  db.seats.push(newPost);
-  res.send({message: 'OK'});
+  const {day, seat, client, email} = req.body;
+  let check = true;
+  for(let post of db.seats){
+    if(post.day == day && post.seat == seat){
+      res.json({message: 'The slot is already taken...'})
+      check = false;
+    }
+  }
+  if(check == true){
+    const newPost = {day: day, seat: seat, client: client, email: email, id: uuidv4()};
+    db.seats.push(newPost);
+    res.json({message: 'OK'});
+  }
 });
 
 router.route('/seats/:id').put((req, res) => {
-  const {author, text} = req.body;
-
-  for(let record of db.seats){
-    if(record.id == req.params.id){
-      record.author = author;
-      record.text = text;
+  const {day, seat, client, email} = req.body;
+  for(let post of db.seats){
+    if(post.id == req.params.id){
+      post.day = day;
+      post.seat = seat;
+      post.client = client;
+      post.email = email;
     };
   };
-    res.send({message: 'OK'});
+  res.json({message: 'OK'});
 });
 
 router.route('/seats/:id').delete((req, res) => {
-  for(let record of db.seats){
-    if(record.id == req.params.id){
-      db.seats.splice(db.seats.indexOf(record));
+  for(let post of db.seats){
+    if(post.id == req.params.id){
+      db.seats.splice(db.seats.indexOf(post));
     };
   };
-    res.send({message: 'OK'});
-})
+  res.json({message: 'OK'});
+});
 
 module.exports = router;

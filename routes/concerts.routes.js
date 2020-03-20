@@ -8,39 +8,41 @@ router.route('/concerts').get((req, res) => {
 });
 
 router.route('/concerts/:id').get((req, res) => {
-  for(let record of db.concerts){
-    if(record.id == req.params.id){
-      res.json(record);
+  for(let post of db.concerts){
+    if(req.params.id == post.id){
+      res.json(post);
     };
   };
 });
 
 router.route('/concerts').post((req, res) => {
-  const {author, text} = req.body;
-  const newPost = {id: uuidv4(), author: author, text: text};
+  const {performer, genre, price, day, image} = req.body;
+  const newPost = {performer: performer, genre: genre, price: price, day: day, image: image, id: uuidv4()};
   db.concerts.push(newPost);
-  res.send({message: 'OK'});
+  res.json({message: 'OK'});
 });
 
 router.route('/concerts/:id').put((req, res) => {
-  const {author, text} = req.body;
-
-  for(let record of db.concerts){
-    if(record.id == req.params.id){
-      record.author = author;
-      record.text = text;
+  const {performer, genre, price, day, image} = req.body;
+  for(let post of db.concerts){
+    if(post.id == req.params.id){
+      post.performer = performer;
+      post.genre = genre;
+      post.price = price;
+      post.day = day;
+      post.image = image;
     };
   };
-    res.send({message: 'OK'});
+  res.json({message: 'OK'});
 });
 
 router.route('/concerts/:id').delete((req, res) => {
-  for(let record of db.concerts){
-    if(record.id == req.params.id){
-      db.concerts.splice(db.concerts.indexOf(record));
+  for(let post of db.concerts){
+    if(post.id == req.params.id){
+      db.concerts.splice(db.concerts.indexOf(post));
     };
   };
-    res.send({message: 'OK'});
-})
+  res.json({message: 'OK'});
+});
 
 module.exports = router;
