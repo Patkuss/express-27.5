@@ -5,7 +5,8 @@
   "author": "Patryk Płaczek <patryk.placzek@wp.pl>",
   "license": "MIT",
   "scripts": {
-    "start": "nodemon server.js",
+    "start": "node server.js",
+    "start:dev": "nodemon server.js",
     "build": "cd client && yarn install && yarn build"
   },
   "dependencies": {
