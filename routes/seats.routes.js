@@ -5,6 +5,7 @@ const uuidv4 = require('uuid/v4');
 
 router.route('/seats').get((req, res) => {
   res.json(db.seats);
+  req.io.emit('seatsUpdated', db.seats);
 });
 
 router.route('/seats/:id').get((req, res) => {
@@ -27,6 +28,7 @@ router.route('/seats').post((req, res) => {
   if(check == true){
     const newPost = {day: day, seat: seat, client: client, email: email, id: uuidv4()};
     db.seats.push(newPost);
+    req.io.emit('seatsUpdated', db.seats );
     res.json({message: 'OK'});
   }
 });
