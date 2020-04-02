@@ -3,6 +3,9 @@ const path = require('path');
 const cors = require('cors');
 const socket = require('socket.io');
 const mongoose = require('mongoose');
+const helmet = require('helmet');
+
+console.log(process.env);
 
 const app = express();
 
@@ -21,6 +24,7 @@ app.use((req, res, next) => {
   req.io = io;
   next();
 });
+app.use(helmet());
 
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname + '/client/build/index.html'));
@@ -30,7 +34,7 @@ app.use((req, res) => {
   res.status(404).send({ message: 'Not found...' });
 });
 
-const uri = 'mongodb+srv://Patkus:1234567890@cluster0-tqq70.mongodb.net/test?retryWrites=true&w=majority';
+const uri = 'mongodb+srv://${process.env.name}:{process.env.pass}@cluster0-tqq70.mongodb.net/test?retryWrites=true&w=majority';
 mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 const db = mongoose.connection;
 
