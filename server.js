@@ -34,7 +34,7 @@ app.use((req, res) => {
   res.status(404).send({ message: 'Not found...' });
 });
 
-const uri = 'mongodb+srv://${process.env.name}:{process.env.pass}@cluster0-tqq70.mongodb.net/test?retryWrites=true&w=majority';
+const uri = "mongodb+srv://${process.env.name}:{process.env.pass}@cluster0-tqq70.mongodb.net/test?retryWrites=true&w=majority";
 mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 const db = mongoose.connection;
 
