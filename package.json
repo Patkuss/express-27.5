@@ -23,7 +23,7 @@
     "mongoose": "5.7.5",
     "onchange": "6.1.0",
     "snyk": "^1.305.0",
-    "socket.io": "2.3.0",
+    "socket.io": "2.4.0",
     "uuid": "^7.0.2",
     "uuidv4": "^6.0.6"
   }
